@@ -4,31 +4,33 @@ session_start();
 
 $RecipeName = $_POST["recipeName"];
 $ingredientName = $_POST["ingredientName"];
-$quantity = $_POST["quantity"];
-
-
+$quantity = $_POST["quantity"]; 
+    
+//Build the connection
 $conn = mysqli_connect($_SESSION["host"], $_SESSION["user"], $_SESSION["passw"], $_SESSION["dbName"]);
-// try and create the table (if it does not exist) ...
-$queryString = "create table if not exists ".$RecipeName."(ingredientName char(200), quantity integer)";
+// try and insert request
+$queryString = "insert into Recipes values(\"$RecipeName\",\"$ingredientName\", $quantity)";
+
 $status = mysqli_query($conn, $queryString);
 
 if (!$status){
-    echo "query: $queryString<br>";
-    die("Error creating table: " . mysqli_error($conn));
+    //Alert the user of the query causing the error
+    echo "Query: $queryString<br>";
+    echo "Error performing insertion:". mysqli_error($conn);
+    
+    //Return to the previous page
+    echo '<br><br> <a href="'.$_SERVER['HTTP_REFERER'].'">Try Again!</a>';
+    //Kill the script
+    die();
 }
-    
-    
-// try and insert request
-$queryString = "insert into ".$RecipeName." values (\"$ingredientName\", $quantity)";
-echo "query: $queryString<br>";
-$status = mysqli_query($conn, $queryString);
-
-if (!$status)
-    die("Error performing insertion: " . mysqli_error($conn));
-    
+else{
     
 // close the connection (to be safe)
 mysqli_close($conn);
+//If the connection succeeds, provide a link to return to main menu
+echo " <br><br>Query Succeeded!<br>";
+echo '<a href="'.$_SESSION['mainMenuAddress'].'">Return to Main Menu</a>';  
+}
 ?>
 
         

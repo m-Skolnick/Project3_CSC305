@@ -19,18 +19,15 @@ if (!$conn){
 <head>
 
 <meta charset="ISO-8859-1">
-<title>Create Recipe or Add Ingredient</title>
+<title>List Ingredients</title>
 </head>
 <body>
 <a href="MainMenu.html">return to main menu</a>
-<header> <h1>Create Recipe or Add Ingredient</h1></header>
+<header> <h1>List a Recipe's Ingredients</h1></header>
 
-<form action="createOrAdd-handler.php" method="post">
+<form action="listIngredients-handler.php" method="post">
 
 Recipe Name: <input type=text name="recipeName"></input> <br>
-New Ingredient Name: <input type=text name="ingredientName"></input> <br>
-Quantity required in recipe: <input type=number name="quantity"></input> <br>
-
 
 <input type=submit value="GO"></input>
 
